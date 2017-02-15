@@ -22,9 +22,9 @@ namespace main_savitch_2C {
 
 	int statistician::length() const {return count;}
 	double statistician::sum() const {return total;}
-	double statistician::mean() const {return sum()/length();}
-	double statistician::minimum() const {return tinyest;}
-	double statistician::maximum() const {return largest;}
+	double statistician::mean() const {assert(count > 0); return sum()/length();}
+	double statistician::minimum() const {assert(count > 0); return tinyest;}
+	double statistician::maximum() const {assert(count > 0); return largest;}
 
 	statistician operator+(const statistician& s1, const statistician& s2) {
 		statistician answer;
