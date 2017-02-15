@@ -1,5 +1,4 @@
-#include <iostream>
-#include <numeric>
+
 #include "stats.h"
 namespace main_savitch_2C {
 	statistician::statistician() {

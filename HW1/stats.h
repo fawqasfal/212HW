@@ -60,7 +60,6 @@
 #ifndef STATS_H     // Prevent duplicate definition
 #define STATS_H
 #include <iostream>
-#include <vector>
 
 namespace main_savitch_2C
 {
