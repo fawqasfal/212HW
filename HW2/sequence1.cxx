@@ -1,5 +1,10 @@
 #include "sequence1.h"
 #include <assert.h> 
+/* INVARIANT : 
+	used, and size(), will always be less than CAPACITY.
+	data[] will contain all of the objects of the sequence, and will be of size CAPACITY. 
+	if size == 0 or current_index > size(), there is no current variable that can be accessed
+*/ 	
 
 namespace main_savitch_3
 { 
@@ -45,5 +50,4 @@ namespace main_savitch_3
 		return current_index < size(); 
 		//if size() == 0, then current_index == 0. if size() > 0 and current index >= size(), were past last element.
  	}
-
 }
