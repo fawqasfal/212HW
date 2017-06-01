@@ -39,34 +39,35 @@ static void insertion_sort(void* base, size_t n, size_t bytes, int compar(const 
     free(new_item);
 }
 
-int partition(void* pivot, void* base, size_t bytes, size_t low, size_t high, int compar(const void*, const void*)) {
+int partition(void* base, size_t bytes, size_t low, size_t high, int compar(const void*, const void*)) {
     //everything to the right of *element(pivind) will be larger than it, and everything to left will be smaller
     void* temp = malloc(bytes);
-    assign(temp, pivot);
-    assign(pivot, element(high));
-    assign(element(high), temp);
+    size_t random_index = rand( ) %  (high - low) + low; 
+    assign(temp, element(high)); 
+    assign(element(high), element(random_index)); 
+    assign(element(random_index), temp); 
+    
+    int i = low - 1;
 
-    void* piv_val = element(high);
-    size_t pivind = low;
-    for (int i = low; i < high; i++) 
-        if (compar(element(i), piv_val) < 0) {
-            assign(temp, element(pivind));
-            assign(element(pivind), element(i));
-            assign(element(i), element(pivind));
-            pivind++;
+    for (int j = low; j <= high - 1; j++) 
+        if (compar(element(j), element(high)) <= 0) {
+            i++;
+            assign(temp, element(i));
+            assign(element(i), element(j));
+            assign(element(j), temp);
         }
-    assign(temp, element(pivind));
-    assign(element(pivind), element(high));
+
+
+    assign(temp, element(i + 1));
+    assign(element(i + 1), element(high));
     assign(element(high), temp);
-    free(temp);
-    return pivind;
+    return i + 1;
 }
 
 
 void quicksort(void* base, size_t n, size_t bytes, int compar(const void*, const void*)) {
     if (n  < 2) 
         return;
-    srand(time(NULL));
     size_t stack[n + 1];
     int ind = -1; //top of stack
     int l = 0; 
@@ -77,22 +78,20 @@ void quicksort(void* base, size_t n, size_t bytes, int compar(const void*, const
         h = stack[ind--];
         l = stack[ind--];
        // if (h - l < 16) 
-           // insertion_sort(element(0 + l), h - l, bytes, compar);
-       // else {
-            int piv = rand() % (h - l) + l; //random pivot point from i and size
-            piv = partition(element(piv), base, bytes, l, h, compar);
-            cout << "Wow!";
-            if (piv > 1) {//we still have to sort the left side
+          //  insertion_sort(element(0 + l), h - l + 1, bytes, compar);
+        //else {
+            int piv = partition(base, bytes, l, h, compar);
+            if (piv - 1 > l) {//we still have to sort the left side
                 stack[++ind] = l;
                 stack[++ind] = piv - 1;
             }
-            if (piv < n - 1) {//we still have to sort the right hand side
-                stack[++ind] = piv + 1;
+            if (piv < h - 1) {//we still have to sort the right hand side
+               stack[++ind] = piv + 1;
                 stack[++ind] = h;
             }
-      //  }
+        }
 
-    }
+    //}
 }
 
 static bool saw_zero = false;
